@@ -8,7 +8,7 @@ import 'package:surf_practice_magic_ball/widgets/bottom_hint.dart';
 import 'package:surf_practice_magic_ball/widgets/centered_positioned.dart';
 
 class MagicBallScreen extends StatefulWidget {
-  const MagicBallScreen({Key? key}) : super(key: key);
+  const MagicBallScreen({super.key});
 
   @override
   State<MagicBallScreen> createState() => _MagicBallScreenState();
@@ -28,7 +28,7 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = _isDarkMode(context);
+    final bool isDarkMode = _isDarkMode(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -52,9 +52,10 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
                     },
                     child: Stack(
                       children: <Widget>[
-                        isDarkMode
-                            ? Image.asset(AssetsPaths.darkBall)
-                            : Image.asset(AssetsPaths.ball),
+                        if (isDarkMode)
+                          Image.asset(AssetsPaths.darkBall)
+                        else
+                          Image.asset(AssetsPaths.ball),
                         Positioned.fill(
                           child: Align(
                             child: SvgPicture.asset(
@@ -89,7 +90,7 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
                                           horizontal: 30.0,
                                         ),
                                         child: Text(
-                                          state.answer.reading,
+                                          state.answer.reading ?? '',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontSize: 32,
@@ -155,9 +156,10 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
                   ),
                 ),
               ),
-              isDarkMode
-                  ? Image.asset(AssetsPaths.darkEllipse)
-                  : Image.asset(AssetsPaths.ellipse),
+              if (isDarkMode)
+                Image.asset(AssetsPaths.darkEllipse)
+              else
+                Image.asset(AssetsPaths.ellipse),
               const SizedBox(
                 height: 50,
               ),

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../shared/shared.dart';
+import 'package:surf_practice_magic_ball/shared/shared.dart';
 
 class BottomHint extends StatelessWidget {
   const BottomHint({

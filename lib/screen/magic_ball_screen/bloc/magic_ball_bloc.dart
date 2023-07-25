@@ -16,7 +16,9 @@ class MagicBallBloc extends Bloc<MagicBallEvent, MagicBallState> {
   }
 
   Future<void> _getAnswer(
-      MagicBallGetAnswerEvent event, Emitter<MagicBallState> emit) async {
+    MagicBallGetAnswerEvent event,
+    Emitter<MagicBallState> emit,
+  ) async {
     try {
       emit(const MagicBallState.loading());
 

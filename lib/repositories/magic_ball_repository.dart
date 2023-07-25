@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:surf_practice_magic_ball/models/answer.dart';
 import 'package:http/http.dart' as http;
+import 'package:surf_practice_magic_ball/models/answer.dart';
 
 abstract interface class MagicBallBaseRepository {
   Future<Answer> getAnswer();
@@ -25,7 +25,8 @@ final class MagicBallApiRepository implements MagicBallBaseRepository {
 
     final response = await http.get(url);
 
-    final Map<String, dynamic> json = jsonDecode(response.body);
+    final Map<String, dynamic> json =
+        jsonDecode(response.body) as Map<String, dynamic>;
 
     return Answer.fromJson(json);
   }

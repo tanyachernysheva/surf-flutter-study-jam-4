@@ -10,6 +10,8 @@ abstract final class AssetsPaths {
 }
 
 abstract final class AppColors {
+  AppColors._();
+
   static final darkBgGradient = [
     const Color.fromRGBO(16, 12, 44, 1),
     Colors.black,
