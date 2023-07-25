@@ -25,10 +25,15 @@ iOS, Android.
 
 # Ссылки на демонстрацию работы/скриншоты
 
+Экран при запуске приложения:
+
  <p align="center"><img src="https://github.com/tanyachernysheva/surf-flutter-study-jam-4/blob/main/docs/assets/init_state.png" width="250"></p>
 
+При нажатии на магический шар: 
 <p align="center"><img src="https://github.com/tanyachernysheva/surf-flutter-study-jam-4/blob/main/docs/assets/light_result.png" width="250"></p>
 
+Темная тема:
 <p align="center"><img src="https://github.com/tanyachernysheva/surf-flutter-study-jam-4/blob/main/docs/assets/dark_result.png" width="250"></p>
 
+Что-то пошло не так:
 <p align="center"><img src="https://github.com/tanyachernysheva/surf-flutter-study-jam-4/blob/main/docs/assets/dark_error.png" width="250"></p>
