@@ -3,6 +3,7 @@ part of 'magic_ball_bloc.dart';
 @immutable
 sealed class MagicBallState {
   const MagicBallState();
+
   const factory MagicBallState.initial() = MagicBallInitialState;
   const factory MagicBallState.data(Answer answer) = MagicBallDataState;
   const factory MagicBallState.loading() = MagicBallLoadingState;

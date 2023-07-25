@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:surf_practice_magic_ball/repositories/magic_ball_repository.dart';
 import 'package:surf_practice_magic_ball/screen/magic_ball_screen/bloc/magic_ball_bloc.dart';
+import 'package:surf_practice_magic_ball/shared/shared.dart';
+import 'package:surf_practice_magic_ball/widgets/bottom_hint.dart';
+import 'package:surf_practice_magic_ball/widgets/centered_positioned.dart';
 
 class MagicBallScreen extends StatefulWidget {
   const MagicBallScreen({Key? key}) : super(key: key);
@@ -25,18 +28,22 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = _isDarkMode(context);
+
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.white, Color.fromRGBO(210, 210, 254, 1)]),
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors:
+              isDarkMode ? AppColors.darkBgGradient : AppColors.lightBgGradient,
+        ),
       ),
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: Column(
-            children: [
+            children: <Widget>[
               Expanded(
                 child: Center(
                   child: GestureDetector(
@@ -44,77 +51,128 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
                       _bloc.add(const MagicBallEvent.getAnswer());
                     },
                     child: Stack(
-                      children: [
-                        Image.asset('assets/ball.png'),
+                      children: <Widget>[
+                        isDarkMode
+                            ? Image.asset(AssetsPaths.darkBall)
+                            : Image.asset(AssetsPaths.ball),
                         Positioned.fill(
                           child: Align(
                             child: SvgPicture.asset(
-                              'assets/star.svg',
+                              AssetsPaths.stars,
                               width: 244,
                             ),
                           ),
                         ),
                         BlocBuilder<MagicBallBloc, MagicBallState>(
-                            bloc: _bloc,
-                            builder: (context, state) {
-                              return switch (state) {
-                                MagicBallInitialState() => Positioned.fill(
-                                    child: Align(
-                                      child: SvgPicture.asset(
-                                        'assets/small star.svg',
-                                        width: 286,
+                          bloc: _bloc,
+                          builder: (context, state) {
+                            return switch (state) {
+                              MagicBallInitialState() => CenteredPositioned(
+                                  child: SvgPicture.asset(
+                                    AssetsPaths.smallStars,
+                                    width: 286,
+                                  ),
+                                ),
+                              MagicBallDataState() => CenteredPositioned(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(200),
+                                      gradient: RadialGradient(
+                                        colors: isDarkMode
+                                            ? AppColors.darkBallBgGradient
+                                            : AppColors.lightBallBgGradient,
                                       ),
                                     ),
-                                  ),
-                                MagicBallDataState() => Positioned.fill(
                                     child: Align(
                                       child: Padding(
-                                        padding: const EdgeInsets.all(16.0),
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 30.0,
+                                        ),
                                         child: Text(
                                           state.answer.reading,
                                           textAlign: TextAlign.center,
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             fontSize: 32,
-                                            color: Color.fromRGBO(
-                                                108, 105, 140, 1),
+                                            color: isDarkMode
+                                                ? AppColors.darkBallTextColor
+                                                : AppColors.lightBallTextColor,
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                MagicBallLoadingState() => Positioned.fill(
-                                    child: Align(
-                                      child: Container(
-                                        decoration: const BoxDecoration(),
+                                ),
+                              MagicBallLoadingState() => CenteredPositioned(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(200),
+                                      gradient: RadialGradient(
+                                        colors: isDarkMode
+                                            ? AppColors.darkBallBgGradient
+                                            : AppColors.lightBallBgGradient,
                                       ),
                                     ),
                                   ),
-                                MagicBallErrorState() => Text(
-                                    state.message,
+                                ),
+                              MagicBallErrorState() => CenteredPositioned(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(600),
+                                      gradient: RadialGradient(
+                                        stops: const [0.3, 0.8],
+                                        colors: AppColors.errorBallBgGradient,
+                                      ),
+                                    ),
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Align(
+                                          child: SvgPicture.asset(
+                                            AssetsPaths.stars,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                1.6,
+                                          ),
+                                        ),
+                                        Align(
+                                          child: SvgPicture.asset(
+                                            AssetsPaths.smallStars,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                1.5,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                              };
-                            }),
+                                ),
+                            };
+                          },
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
-              SvgPicture.asset('assets/Ellipse 7.svg'),
+              isDarkMode
+                  ? Image.asset(AssetsPaths.darkEllipse)
+                  : Image.asset(AssetsPaths.ellipse),
               const SizedBox(
                 height: 50,
               ),
-              const Text(
-                'Нажмите на шар\nили потрясите телефон',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Color.fromRGBO(114, 114, 114, 1),
-                ),
-              ),
+              const BottomHint(),
             ],
           ),
         ),
       ),
     );
+  }
+
+  bool _isDarkMode(BuildContext context) {
+    final brightness = MediaQuery.of(context).platformBrightness;
+    final isDarkMode = brightness == Brightness.dark;
+
+    return isDarkMode;
   }
 }
