@@ -25,4 +25,4 @@ iOS, Android.
 
 # Ссылки на демонстрацию работы/скриншоты
 
-![init_state](https://github.com/tanyachernysheva/surf-flutter-study-jam-4/assets/62708138/afb50230-d0ca-424f-9aac-713d4dae16fb)
+ <p align="center"><img src="docs/assets/init_state.png" width="250"></p>
